@@ -1,14 +1,10 @@
-# Getting Started with Create React App
+# YTLooper - YouTube video looping tool
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This was inspired from [AB Loop Player by Alexander Grahn](https://agrahn.gitlab.io/ABLoopPlayer/)
 
-## Available Scripts
+## Changes
+- Modern UI
 
-In the project directory, you can run:
+## Future
+- Allow folders of video links
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser
-
-https://minicoop8.github.io/YTLooper/public/index.html
