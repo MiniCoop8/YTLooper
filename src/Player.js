@@ -1,9 +1,10 @@
-import { useEffect, useState, useContext } from 'react';
+import React,{ useEffect, useState, useContext } from 'react';
 import { Box, Button, IconButton, Slider, Grid } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+// import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
+import LoopIcon from '@mui/icons-material/Loop';
 
 import YouTube from 'react-youtube';
 import { useInterval } from 'usehooks-ts';
@@ -13,11 +14,14 @@ import { AppContext } from './AppProvider';
 
 const Player = (props) => {
     const { player, setPlayer, currentVID } = useContext(AppContext);
-    // const [player, setPlayer] = useState()
+
+    const [currentPosition, setCurrentPosition] = useState(0)
+    const [positionMarkers, setPositionMarkers] = useState([])
     const [range, setRange] = useState([0, 100])
     const [rangeMarks, setRangeMarks] = useState([])
     const [playerWidth, setPlayerWidth] = useState(640)
     const [showPlay, setShowPlay] = useState(true)
+    const [max, setMax] = useState(100)
 
     const opts = {
         height: playerWidth/1.641,
@@ -57,6 +61,8 @@ const Player = (props) => {
         switch (evt.data) {
             case -1:
                 setRange([0, player.getDuration()])
+                setMax(player.getDuration())
+                setCurrentPosition(0)
                 break
             case 5:
                 player.playVideo()
@@ -71,7 +77,11 @@ const Player = (props) => {
         setPlayer(evt.target)
     }
 
-    useInterval(setA, 500)
+    const setPostion = () => {
+        setCurrentPosition(player.getCurrentTime())
+    }
+
+    useInterval(setPostion, 500)
 
     useEffect(() => {
         if (range) {
@@ -87,6 +97,15 @@ const Player = (props) => {
             ])
         }
     }, [range])
+
+    useEffect(() => {
+        if (currentPosition) {
+            setPositionMarkers([{
+                value: currentPosition,
+                label: secondsToHms(currentPosition)
+            }])
+        }
+    }, [currentPosition])
 
     return (
         // <Grid container item>
@@ -107,15 +126,25 @@ const Player = (props) => {
                     // onPlaybackRateChange={func} // defaults -> noop
                     // onPlaybackQualityChange={func} // defaults -> noop
                 />
+                <Slider 
+                    size='large'
+                    className='positionSlider'
+                    value={currentPosition}
+                    step={0.01}
+                    max={max}
+                    // onChange={sliderChange}
+                    track={false}
+                    marks={positionMarkers}
+                />
             </Box>
-            <Box width={playerWidth-40} className='controlContainer'>
+            <Box className=''>
                 <Grid container item>
                     <Slider 
                         size='small'
                         className='videoSlider'
                         value={range}
                         step={0.01}
-                        max={(range? range[1] : 100)}
+                        max={max}
                         onChange={sliderChange}
                         marks={rangeMarks}
                     />
@@ -144,8 +173,8 @@ const Player = (props) => {
                             </Grid>
                         )}
                         <Grid item className='controlButton'>
-                            <IconButton>
-                                <ArrowForwardIosIcon/>
+                            <IconButton disabled={true}>
+                                <LoopIcon/>
                             </IconButton>
                         </Grid>
                         <Grid item className='controlButton'>

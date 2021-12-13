@@ -24,6 +24,28 @@
   color: white;
 }
 
+.positionSlider .MuiSlider-rail {
+    color: #f00;
+    opacity: 1;
+}
+.positionSlider .MuiSlider-thumb {
+    color: #0F0;
+    border-radius: 0;
+    width: 5px; 
+    height: 10px; 
+    /* border-left: 5px solid transparent; */
+    /* border-right: 5px solid transparent; */
+    /* border-bottom: 5px solid black; */
+}
+.positionSlider .MuiSlider-markLabel {
+    top: 10px
+}
+.positionSlider.MuiSlider-root {
+    height: 10px;
+    padding: 0;
+    border-radius: 0;
+}
+
 .error {
     color: orangered;
     background-color: lightgray;

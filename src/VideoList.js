@@ -1,4 +1,4 @@
-import { forwardRef, Fragment, useState } from 'react';
+import React, { forwardRef, Fragment, useState } from 'react';
 import { IconButton, List, TextField, Grid } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import produce from 'immer'
@@ -19,6 +19,7 @@ const VideoList = (props) => {
             //         {
             //             A: 5,
             //             B: 60
+            //             Description: 'loop over hard part'
             //         }
             //     ]
             // },
