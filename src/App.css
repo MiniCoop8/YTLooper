@@ -2,6 +2,7 @@
   text-align: center;
 }
 
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -43,7 +44,14 @@
 .positionSlider.MuiSlider-root {
     height: 10px;
     padding: 0;
+    width: calc(100% - 25px);
     border-radius: 0;
+}
+
+.videoSlider.MuiSlider-root {
+    width: calc(100% - 25px);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .error {
@@ -64,6 +72,23 @@
     padding-bottom: 5px;
 }
 
+.videoListPopover {
+}
+
+.loopButton button {
+    width: 35px;
+    min-width: 35px;
+    border-radius: 30px;
+}
+
+.menuIcon {
+    color:lightgray !important;
+    padding-right: 12px !important;
+}
+.mainToolbar {
+    padding-left: 10px !important;
+}
+
 .itemRow {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
@@ -77,13 +102,24 @@
 }
 
 .mainContainer {
-    padding: 20px;
+    max-width: 840px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.sideBar {
-    width: 200px;
-    padding-right: 20px;
+.appIcons {
+    margin-left: auto;
 }
+
+.navIcon {
+    color:lightgray !important
+}
+
+/* .sideBar {
+    width: 275px;
+    padding-right: 20px;
+} */
 
 .controlContainer {
     padding-left: 20px;

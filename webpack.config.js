@@ -9,7 +9,7 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
     },
     module: {
-        rules: [
+        rules: [ 
             {
                 test: /\.?js$/,
                 exclude: /node_modules/,
@@ -23,6 +23,13 @@ module.exports = {
             {
                 test: /\.css$/i,
                 use: ["style-loader", "css-loader"],
+            },
+            {
+                test: /\.(jpg|png|svg)$/,
+                loader: 'url-loader',
+                options: {
+                  name: '[path][name].[hash].[ext]',
+                },
             },
         ],
     },

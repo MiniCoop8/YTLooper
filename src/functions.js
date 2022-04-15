@@ -11,3 +11,16 @@ export const secondsToHms = (d) => {
     var sDisplay = ':' + (s > 0 ? zeroPad(s,2) : zeroPad(s,2))
     return hDisplay + mDisplay + sDisplay; 
 }
+
+export const defaultLoop = {
+    VID: null, 
+    Title: null,
+    loop: {
+        ID: null,
+        Desc: '',
+        A: 0,
+        B: null,
+        Speed: 1,
+        Locked: false
+    }
+}

@@ -3,14 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { Grid, TextField, Button, IconButton, Box } from '@mui/material'
 
 import Player from './Player'
-import VideoList from './VideoList'
-import AppProvider from './AppProvider';
+import TopNav from './TopNav'
+import AppProvider from './PlayerProvider';
 
 
 function App() {
-    const [currentVID, setCurrentVID] = useState()
     useEffect(() => {
-        document.title = 'YTLooper'
+        document.title = 'YT Looper'
     }, [])
 
     return (
@@ -18,11 +17,11 @@ function App() {
             <AppProvider> 
                 <header>
                     <Grid container className='mainContainer'>
-                        <Grid item className='sideBar'>
-                            <VideoList setVID={setCurrentVID}/>
+                        <Grid item xs={12}>
+                            <TopNav/>
                         </Grid>
-                        <Grid item>
-                            <Player VID={currentVID}/>
+                        <Grid item xs={12}>
+                            <Player/>
                         </Grid>
                         {/* { error && 
                             <Grid item sm={12}>
