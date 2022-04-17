@@ -7,4 +7,5 @@ This was inspired by [AB Loop Player by Alexander Grahn](https://agrahn.gitlab.i
 
 ## Future
 - Allow folders of video links
+- Add notes to songs
 
