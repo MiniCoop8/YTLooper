@@ -5,6 +5,7 @@ export const PlayerContext = createContext({
     currentVID: {
         VID: null,
         Title: '',
+        Notes: null,
         loops: []
     },
     setPlayer: () => {}

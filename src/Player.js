@@ -1,5 +1,5 @@
 import React,{ useEffect, useState, useContext } from 'react';
-import { Box, Button, IconButton, Slider, Grid, Tooltip, TextField, Typography } from '@mui/material';
+import { Box, Button, Menu, MenuItem, IconButton, Slider, Grid, Tooltip, TextField, Typography } from '@mui/material';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
@@ -11,6 +11,9 @@ import ClearIcon from '@mui/icons-material/Clear';
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import YouTube from '@u-wave/react-youtube';
 import { useInterval } from 'usehooks-ts';
@@ -38,6 +41,8 @@ const Player = (props) => {
     const [loopEnabled, setLoopEnabled] = useState(true)
     const { ShowConfirm, CloseConfirm, ConfirmDialog } = useConfimDialog()
     const [loopLocked, setLoopLocked] = useState(false)
+    const [moreMenuAnchor, setMoreMenuAnchor] = useState(null)
+    const moreMenuOpen = Boolean(moreMenuAnchor);
 
     const ShowDeleteLoopConfirm = () => {
         ShowConfirm({
@@ -396,7 +401,7 @@ const Player = (props) => {
                         <Grid item xs={1}/>
                         <Grid item>
                             <TextField 
-                                sx={{width: '265px', marginRight: '5px'}}
+                                sx={{width: '360px', marginRight: '5px'}}
                                 label="Loop Description" 
                                 variant='standard'
                                 disabled={currentVID == null}
@@ -404,46 +409,73 @@ const Player = (props) => {
                                 value={loopDesc}
                             />
                         </Grid>
-                        <Grid item className='controlButton'>
-                            <Tooltip title={(currentVID)? 'Save Loop' : 'Save Video'}>
-                                <span>    
-                                    <IconButton disabled={currentVID == null} onClick={saveVideo}>
-                                        <SaveIcon/>
-                                    </IconButton>
-                                </span>
-                            </Tooltip>
-                        </Grid>
-                        <Grid item className='controlButton'>
-                            <Tooltip title='Remove Loop'>
-                                <span>
-                                    <IconButton disabled={currentVID == null} onClick={() => ShowDeleteLoopConfirm()}>
-                                        <RemoveCircleOutlineIcon/>
-                                    </IconButton>
-                                </span>
-                            </Tooltip>
-                        </Grid>
-                        <Grid item className='controlButton'>
-                            <Tooltip title='Remove Video'>
-                                <span>
-                                    <IconButton disabled={currentVID == null} onClick={() => ShowDeleteVideoConfirm()}>
-                                        <RemoveCircleIcon/>
-                                    </IconButton>
-                                </span>
-                            </Tooltip>
-                        </Grid>
-                        <Grid item className='controlButton'>
-                            <Tooltip title='Reset Loop'>
-                                <span>
-                                    <IconButton disabled={currentVID == null} onClick={() => ShowNewLoopConfirm()}>
-                                        <ClearIcon/>
-                                    </IconButton>
-                                </span>
-                            </Tooltip>
+                        <Grid item>
+                            <Box sx={{ marginLeft: '8px' }}>
+                                <IconButton onClick={(evt) => { setMoreMenuAnchor(evt.target)}}>
+                                    <MoreVertIcon/>
+                                </IconButton>
+                            </Box>
                         </Grid>
                     </Box>
                 </Grid>
             </Box>
             {<ConfirmDialog/>}
+            <Menu
+                id="menu"
+                anchorEl={moreMenuAnchor}
+                open={moreMenuOpen}
+                onClose={() => { setMoreMenuAnchor(null)}}
+            >
+                <MenuItem
+                    disabled={currentVID == null}
+                    onClick={(evt) => {
+                        saveVideo(evt)
+                        setMoreMenuAnchor(null)
+                    }}>
+                    <Box sx={{ marginRight: '10px' }}>
+                        <SaveIcon/>
+                    </Box>{(currentVID)? 'Save Loop' : 'Save Video'}
+                </MenuItem>
+                {/* <MenuItem>
+                    <Box sx={{ marginRight: '10px' }}>
+                        <NoteAddIcon/>
+                    </Box>
+                    Add a note
+                </MenuItem> */}
+                <MenuItem 
+                    disabled={currentVID == null}
+                    onClick={() => {
+                        ShowDeleteLoopConfirm()
+                        setMoreMenuAnchor(null)
+                    }}>
+                    <Box sx={{ marginRight: '10px' }}>
+                        <RemoveCircleOutlineIcon/>
+                    </Box>
+                    Remove Loop
+                </MenuItem>
+                <MenuItem 
+                    disabled={currentVID == null}
+                    onClick={() => {
+                        ShowDeleteVideoConfirm()
+                        setMoreMenuAnchor(null)
+                    }}>
+                    <Box sx={{ marginRight: '10px' }}>
+                        <DeleteForeverIcon/>
+                    </Box>
+                    Remove Video
+                </MenuItem>
+                <MenuItem 
+                    disabled={currentVID == null}
+                    onClick={() => {
+                        ShowNewLoopConfirm()
+                        setMoreMenuAnchor(null)
+                    }}>
+                    <Box sx={{ marginRight: '10px' }}>
+                        <ClearIcon/>
+                    </Box>
+                    Reset Loop
+                </MenuItem>
+            </Menu>
         </Box>
     )
 }

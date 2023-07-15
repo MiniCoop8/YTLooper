@@ -11,6 +11,7 @@ import PreviewIcon from '@mui/icons-material/Preview';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LoopIcon from '@mui/icons-material/Loop';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import NoteIcon from '@mui/icons-material/Note';
 
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -24,11 +25,14 @@ import { PlayerContext } from './PlayerProvider';
 import loopIcon from './LoopIconLight.png'
 
 import StyledTreeItem from './StyledTreeItem'
+import { Notes } from '@mui/icons-material';
+import NotesDialog from './NotesDialog';
 
 const TopNav = (props) => {
-    const { setCurrentVID, player } = useContext(PlayerContext);
+    const { currentVID, setCurrentVID, player } = useContext(PlayerContext);
     const [openDialog, setOpenDialog] = useState(false)
     const [openInfoDialog, setOpenInfoDialog] = useState(false)
+    const [openNoteDialog, setOpenNoteDialog] = useState(false)
     const [videoData, setVideoData] = useLocalStorage('YTLooper.videoData', {videos: []})
     const [videoListAnchor, setVideoListAnchor] = useState(null);
     const [menuAnchor, setMenuAnchor] = useState(null);
@@ -42,6 +46,9 @@ const TopNav = (props) => {
     const closeInfoDialog = () => {
         setOpenInfoDialog(false)
     }
+    const closeNoteDialog = () => {
+        setOpenNoteDialog(false)
+    } 
 
     const selectVideo = (video) => {
         if (video.loops.length == 0) {
@@ -74,8 +81,13 @@ const TopNav = (props) => {
                 >
                     <MenuIcon/>
                 </IconButton>
-                    <Typography variant="h4">YT L <img src={loopIcon} style={{width: '42px', verticalAlign: 'bottom', paddingRight: '2px', marginLeft: '-5px'}} />per</Typography> 
+                <Typography variant="h4">YT L <img src={loopIcon} style={{width: '42px', verticalAlign: 'bottom', paddingRight: '2px', marginLeft: '-5px'}} />per</Typography> 
                     <div className='appIcons'>
+                        <Tooltip title="View Notes">
+                            <IconButton onClick={() => {setOpenNoteDialog(true)}} disabled={currentVID == null}>
+                                <NoteIcon/>
+                            </IconButton>
+                        </Tooltip>
                         <Tooltip title='Manage Loops'>
                             <IconButton variant="contained" className='navIcon' onClick={(evt) => { setVideoListAnchor(evt.target)}}>
                                 <BookmarkIcon/>
@@ -87,6 +99,10 @@ const TopNav = (props) => {
             <PreviewVideoDialog
                 open={openDialog}
                 close={closeDialog}
+            />
+            <NotesDialog 
+                open={openNoteDialog}
+                close={closeNoteDialog}
             />
             <AppInfo
                 open={openInfoDialog}
@@ -167,7 +183,7 @@ const TopNav = (props) => {
                                                 color="#1a73e8"
                                                 bgColor="#e8f0fe"
                                                 onClick={() => {
-                                                    setCurrentVID({VID: video.VID, Title: video.Title, loop: loop})
+                                                    setCurrentVID({VID: video.VID, Title: video.Title, loop: loop, Notes: video.Notes})
                                                     setVideoListAnchor(null)
                                                 }}
                                             />
